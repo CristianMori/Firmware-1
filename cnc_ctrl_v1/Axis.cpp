@@ -53,7 +53,7 @@ motorGearboxEncoder(pwmPin, directionPin1, directionPin2, encoderPin1, encoderPi
 
 void   Axis::initializePID(){
     _pidController.SetMode(AUTOMATIC);
-    _pidController.SetOutputLimits(-255, 255);
+    _pidController.SetOutputLimits(-20, 20);
     _pidController.SetSampleTime(10);
 }
 
@@ -116,7 +116,7 @@ void   Axis::computePID(){
     
     _pidController.Compute();
     
-    motorGearboxEncoder.motor.write(_pidOutput);
+    motorGearboxEncoder.setSpeedRPM(_pidOutput);
     
     motorGearboxEncoder.computeSpeed();
     

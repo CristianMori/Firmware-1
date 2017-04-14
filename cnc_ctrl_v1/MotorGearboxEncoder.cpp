@@ -34,6 +34,30 @@ encoder(encoderPin1,encoderPin2)
     
 }
 
+void  MotorGearboxEncoder::setSpeedRPM(float RPM){
+    /*
+    
+    Set the motor's speed in RPM
+    
+    */
+    _targetRPM = RPM;
+    
+    int scaledSpeed = 13.0*RPM;
+    
+    Serial.println(scaledSpeed);
+    
+    motor.write(scaledSpeed);
+}
+
+void MotorGearboxEncoder::computePID(){
+    /*
+    
+    Recompute the internal PID loop. A place holder for now.
+    
+    */
+    Serial.println("PID");
+}
+
 float MotorGearboxEncoder::computeSpeed(){
     /*
     

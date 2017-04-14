@@ -28,10 +28,13 @@
             Encoder    encoder;
             Motor      motor;
             float      computeSpeed();
+            void       setSpeedRPM(float RPM);
+            void       computePID();
         private:
             double     _lastPosition;
             double     _lastTimeStamp;
             float      _runningAverage(int newValue);
+            float      _targetRPM;
             int        _oldValue1;
             int        _oldValue2;
             int        _oldValue3;
