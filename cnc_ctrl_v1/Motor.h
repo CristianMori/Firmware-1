@@ -43,11 +43,13 @@
             void setSegment(int index, float slope, float intercept, int negativeBound, int positiveBound);
             LinSegment getSegment(int index);
             void  directWrite(int voltage);
+            float appliedVoltage();
         private:
             int _pwmPin;
             int _pin1;
             int _pin2;
             bool _attachedState;
+            int _PWMPeriod;
             LinSegment _linSegments[4];
             
     };

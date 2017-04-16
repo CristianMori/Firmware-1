@@ -30,11 +30,14 @@
             float      computeSpeed();
             void       setSpeedRPM(float RPM);
             void       computePID();
+            float      computeTorque();
         private:
             double     _lastPosition;
             double     _lastTimeStamp;
             float      _runningAverage(int newValue);
             float      _targetRPM;
+            float      _RPM;
+            float      _torque;
             int        _oldValue1;
             int        _oldValue2;
             int        _oldValue3;

@@ -52,6 +52,10 @@ int  Motor::setupMotor(int pwmPin, int pin1, int pin2){
   return 1;
 }
 
+float Motor::appliedVoltage(){
+    return float(_PWMPeriod)/21.25;
+}
+
 void Motor::attach(){
     _attachedState = 1;
 }
@@ -60,16 +64,20 @@ void Motor::detach(){
     _attachedState = 0;
     
     //stop the motor
-    digitalWrite(_pin1,    HIGH);
-    digitalWrite(_pin2,    LOW) ;
-    digitalWrite(_pwmPin,  LOW);
+    //digitalWrite(_pin1,    HIGH);
+    //digitalWrite(_pin2,    LOW) ;
+    //digitalWrite(_pwmPin,  LOW);
+    
+    //_PWMPeriod = 0;
 }
 
 void Motor::write(int speed){
     /*
     Sets motor speed from input. Speed = 0 is stopped, -255 is full reverse, 255 is full ahead.
     */
-    if (_attachedState == 1){
+    if (true){//_attachedState == 1){
+        
+        speed = 255;
         
         //linearize the motor
         speed = _convolve(speed);
@@ -96,9 +104,9 @@ void Motor::write(int speed){
         
         speed = abs(speed); //remove sign from input because direction is set by control pins on H-bridge
         
-        int pwmFrequency = round(speed);
+        _PWMPeriod = round(speed);
         
-        analogWrite(_pwmPin, pwmFrequency);
+        analogWrite(_pwmPin, _PWMPeriod);
         
     }
 }
@@ -120,7 +128,9 @@ void Motor::directWrite(int voltage){
         digitalWrite(_pin2 , HIGH );
     }
     
-    analogWrite(_pwmPin, abs(voltage));
+    _PWMPeriod = abs(voltage);
+    
+    analogWrite(_pwmPin, _PWMPeriod);
 }
 
 int  Motor::attached(){

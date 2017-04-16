@@ -44,18 +44,31 @@ void  MotorGearboxEncoder::setSpeedRPM(float RPM){
     
     int scaledSpeed = 13.0*RPM;
     
-    Serial.println(scaledSpeed);
-    
     motor.write(scaledSpeed);
 }
 
-void MotorGearboxEncoder::computePID(){
+void  MotorGearboxEncoder::computePID(){
     /*
     
     Recompute the internal PID loop. A place holder for now.
     
     */
     Serial.println("PID");
+}
+
+float MotorGearboxEncoder::computeTorque(){
+    /*
+    
+    Computes the torque being applied by the motor. The applied torque is computed
+    by guessing a predicted speed based on the model of the motor having
+    zero speed at 0V and 20RPM at 12 volts (A better model is possible). Then we 
+    subtract the difference between the two to find the applied torque.
+    
+    */
+    
+    _torque = _RPM + 1.5*motor.appliedVoltage();
+    
+    Serial.println(_torque);
 }
 
 float MotorGearboxEncoder::computeSpeed(){
@@ -68,13 +81,13 @@ float MotorGearboxEncoder::computeSpeed(){
     float    distMoved   =  _runningAverage(encoder.read() - _lastPosition);     //because of quantization noise it helps to average these
     
     //Compute the speed in RPM
-    float RPM = (7364.0*distMoved)/float(timeElapsed);  //6*10^7 us per minute, 8148 steps per revolution
+    _RPM = (7364.0*distMoved)/float(timeElapsed);  //6*10^7 us per minute, 8148 steps per revolution
     
     //Store values for next time
     _lastTimeStamp = micros();
     _lastPosition  = encoder.read();
     
-    return RPM;
+    return _RPM;
 }
 
 float MotorGearboxEncoder::_runningAverage(int newValue){
