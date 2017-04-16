@@ -77,7 +77,9 @@ void Motor::write(int speed){
     */
     if (true){//_attachedState == 1){
         
-        speed = 255;
+        speed = -100;
+        
+        _PWMPeriod = speed;
         
         //linearize the motor
         speed = _convolve(speed);
@@ -104,9 +106,7 @@ void Motor::write(int speed){
         
         speed = abs(speed); //remove sign from input because direction is set by control pins on H-bridge
         
-        _PWMPeriod = round(speed);
-        
-        analogWrite(_pwmPin, _PWMPeriod);
+        analogWrite(_pwmPin, round(speed));
         
     }
 }
