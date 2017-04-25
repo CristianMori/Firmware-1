@@ -61,8 +61,8 @@ bool zAxisAttached = false;
 #define ZENCODERSTEPS  7560.0 //7*270*4 --- 7ppr, 270:1 gear ratio, quadrature encoding
 
 Axis leftAxis (ENC, IN6, IN5, ENCODER3B, ENCODER3A, "Left-axis",   LEFT_EEPROM_ADR, DISTPERROT, ENCODERSTEPS);
-Axis rightAxis(ENA, IN1, IN2, ENCODER1A, ENCODER1B, "Right-axis", RIGHT_EEPROM_ADR, DISTPERROT, ENCODERSTEPS);
-Axis zAxis    (ENB, IN3, IN4, ENCODER2B, ENCODER2A, "Z-Axis",         Z_EEPROM_ADR, ZDISTPERROT, ZENCODERSTEPS);
+Axis rightAxis(ENB, IN3, IN4, ENCODER2B, ENCODER2A, "Right-axis", RIGHT_EEPROM_ADR, DISTPERROT, ENCODERSTEPS);
+Axis zAxis    (ENA, IN1, IN2, ENCODER1A, ENCODER1B, "Z-Axis",         Z_EEPROM_ADR, ZDISTPERROT, ZENCODERSTEPS);
 
 
 Kinematics kinematics;
